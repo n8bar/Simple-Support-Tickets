@@ -8,4 +8,29 @@ use Illuminate\Database\Eloquent\Model;
 class category extends Model
 {
     use HasFactory;
+	protected $table = 'categories';
+	
+	protected $casts = [
+		
+	];
+	
+	protected $fillable = [
+		'name',
+		'description'
+	];
+	
+	public function tickets()
+	{
+		return $this->hasMany(Ticket::class);
+	}
+	
+	public function changedBy()
+	{
+		return $this->belongsTo(User::class, 'changed_by_tech_id');
+	}
+	
+	public function newTech()
+	{
+		return $this->belongsTo(User::class, 'new_tech_id');
+	}
 }
