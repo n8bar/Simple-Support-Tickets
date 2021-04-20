@@ -3,4 +3,10 @@
 <file name="2014_10_12_000000_create_users_table.php" server="192.168.68.20//var/www/n8.asuscomm.com/public_html/" local="132634087880000000" remote="132634087880000000" Dst="2" />
 <file name="2014_10_12_100000_create_password_resets_table.php" server="192.168.68.20//var/www/n8.asuscomm.com/public_html/" local="132634087880000000" remote="132634087880000000" Dst="2" />
 <file name="2019_08_19_000000_create_failed_jobs_table.php" server="192.168.68.20//var/www/n8.asuscomm.com/public_html/" local="132634087880000000" remote="132634087880000000" Dst="2" />
+<file name="2021_04_20_221912_create_statuses_table.php" server="192.168.68.20//var/www/n8.asuscomm.com/public_html/" local="132634307520000000" remote="132634307520000000" Dst="2" />
+<file name="2021_04_20_222554_create_status_changes_table.php" server="192.168.68.20//var/www/n8.asuscomm.com/public_html/" local="132634311540000000" remote="132634311540000000" Dst="2" />
+<file name="2021_04_20_222722_create_assignment_changes_table.php" server="192.168.68.20//var/www/n8.asuscomm.com/public_html/" local="132634312420000000" remote="132634312420000000" Dst="2" />
+<file name="2021_04_20_222740_create_categories_table.php" server="192.168.68.20//var/www/n8.asuscomm.com/public_html/" local="132634312600000000" remote="132634312600000000" Dst="2" />
+<file name="2021_04_20_222759_create_tickets_table.php" server="192.168.68.20//var/www/n8.asuscomm.com/public_html/" local="132634312790000000" remote="132634312790000000" Dst="2" />
+<file name="2021_04_20_222812_create_notes_table.php" server="192.168.68.20//var/www/n8.asuscomm.com/public_html/" local="132634312920000000" remote="132634312920000000" Dst="2" />
 </dwsync>
