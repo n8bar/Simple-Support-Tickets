@@ -15,7 +15,13 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+	
+	<!-- Favicon -->
+	<link rel="shortcut icon" sizes="64x64" href="{{ asset('favicon.ico') }}?v={{ date('YmdHis') }}" />
+	<link rel="icon" sizes="64x64" href="{{ asset('favicon.ico') }}?v={{ date('YmdHis') }}" />
+<!-- link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" -->
+	
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>

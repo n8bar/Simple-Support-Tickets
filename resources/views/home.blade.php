@@ -13,8 +13,18 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    {{ __('You are logged in!') }}
+					
+					@if (Auth::user())
+						Welcome, {{ Auth::user()->name }}.
+						
+						
+						
+						
+					@else
+                    	Please                                 
+                     	<a href="{{ route('login') }}">sign in</a>
+                        to use Playcryptos.com Support.
+					@endif
                 </div>
             </div>
         </div>
