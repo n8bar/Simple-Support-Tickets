@@ -30,3 +30,7 @@ public/_notes/dwsync.xml
 resources/views/_notes/dwsync.xml
 resources/views/layouts/_notes/dwsync.xml
 routes/_notes/dwsync.xml
+app/Http/Controllers/Adminer/_notes/dwsync.xml
+app/Http/Middleware/_notes/dwsync.xml
+resources/views/_notes/dwsync.xml
+routes/_notes/dwsync.xml
