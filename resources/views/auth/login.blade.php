@@ -58,9 +58,9 @@
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <!-- a class="btn btn-link" href="{{ route('password.request') }}">
                                         I forgot my password.
-                                    </a>
+                                    </a -->
                                 @endif
 								<a class="btn btn-link" href="{{ route('register') }}">
 									I still need to register.
