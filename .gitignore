@@ -34,3 +34,8 @@ app/Http/Controllers/Adminer/_notes/dwsync.xml
 app/Http/Middleware/_notes/dwsync.xml
 resources/views/_notes/dwsync.xml
 routes/_notes/dwsync.xml
+routes/_notes/dwsync.xml
+resources/views/auth/passwords/_notes/dwsync.xml
+app/Http/Controllers/Auth/_notes/dwsync.xml
+resources/views/_notes/dwsync.xml
+app/Models/_notes/dwsync.xml
