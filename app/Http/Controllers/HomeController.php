@@ -23,15 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //return view('home');
+        return view('userdash');
     }
-	
+
 	public function __invoke()
 	{
 		return view('userdash');
-		if (auth()->check()) {
-			return view('userdash');
-		}
-		return view('welcome2sst');
 	}
 }
