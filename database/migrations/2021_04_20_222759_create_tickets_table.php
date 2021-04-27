@@ -22,7 +22,7 @@ class CreateTicketsTable extends Migration
 			$table->foreign('category_id')->references('id')->on('categories');
 			$table->string('title');
 			$table->string('details');
-			$table->unsignedTinyInteger('satisfaction');
+			$table->unsignedTinyInteger('satisfaction')->nullable();
         });
     }
 

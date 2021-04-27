@@ -17,7 +17,7 @@ class CreateStatusesTable extends Migration
             $table->id();
             $table->timestamps();
 			$table->string('name');
-			$table->boolean('waiting_on_user');
+			$table->boolean('waiting_on_user')->nullable();
         });
     }
 
