@@ -14,23 +14,23 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-			[
+			[//1
 				'name'=>'Quick Question',
 				'description'=>'I just need a quick answer that\'s not in the FAQ\'s.'
 			],
-			[
+			[//2
 				'name'=>'Login Issues',
 				'description'=>'I need help with logging in or to request a password reset.'
 			],
-			[
+			[//3
 				'name'=>'Bug Report',
 				'description'=>'There\'s something awfully screwy going on around here.'
 			],
-            [
+            [//4
                 'name'=>'Technical Issues',
                 'description'=>'I need support with something.'
             ],
-            [
+            [//5
                 'name'=>'Other',
                 'description'=>'Something else'
             ]
