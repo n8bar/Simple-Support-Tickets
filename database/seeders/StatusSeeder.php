@@ -29,6 +29,10 @@ class StatusSeeder extends Seeder
                 'waiting_on_user' => true,
             ],
             [
+                'name' => 'Solution Proposed',
+                'waiting_on_user' => true,
+            ],
+            [
                 'name' => 'Solution Implemented',
                 'waiting_on_user' => true,
             ],
