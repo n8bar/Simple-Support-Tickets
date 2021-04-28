@@ -8,9 +8,10 @@
                 <div class="card-header">
 					@guest
 						Welcome to Playcryptos.com Support!
-					@else
-						{{ __('Dashboard') }}						
-					@endguest
+                    @endguest
+					@auth
+						{{ __('Dashboard') }}
+                    @endauth
 				</div>
 
                 <div class="card-body">
@@ -19,7 +20,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-					
+
 					@yield('dashboard')
                 </div>
             </div>
