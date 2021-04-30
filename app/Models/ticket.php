@@ -3,6 +3,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+
 
 class ticket extends Model
 {
@@ -16,7 +18,8 @@ class ticket extends Model
 	protected $fillable = [
 		'title',
 		'details',
-		'satisfaction'
+		'satisfaction',
+        'user_id'
 	];
 
 	public function notes()
@@ -26,14 +29,29 @@ class ticket extends Model
 
 	public function assignedTech()
 	{
-		return $this->hasMany(assignment_change::class);
-		//Todo: Return the user from the latest assignment change instead.
+        $assCh = assignment_change::where('ticket_id', $this->id)->latest()->get()->first();
+
+        if ( $assCh == null) {
+            return null;
+        } else {
+            return User::where('id', $assCh->new_tech_id)->first();
+        }
 	}
 
+    /**
+     *
+     *
+     * @return Status
+     */
 	public function status()
-	{
-		return $this->hasMany(status_change::class);
-		//Todo: Return the status from the latest status change instead.
+    {
+        $sc = status_change::where('ticket_id', $this->id)->latest()->get()->first();
+
+        if ( $sc == null) {
+            return Status::where('id', 1)->first();
+        } else {
+            return Status::where('id', $sc->status_id)->first();
+        }
 	}
 
 	public function category()
@@ -41,8 +59,9 @@ class ticket extends Model
 		return $this->belongsTo(Category::class);
 	}
 
-	public function user()
-	{
-		return $this->belongsTo(User::class);
-	}
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

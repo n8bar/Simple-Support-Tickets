@@ -6,12 +6,7 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-					@guest
-						Welcome to Playcryptos.com Support!
-                    @endguest
-					@auth
-						{{ __('Dashboard') }}
-                    @endauth
+                    {{ __('New Ticket') }}
 				</div>
 
                 <div class="card-body">
@@ -20,8 +15,15 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    <form action="{{route('newTicket')}}" method="post">
+                        @csrf
+                        <label>
 
-					@yield('dashboard')
+                        </label>
+
+
+                        <input type="submit" value="Submit" />
+                    </form>
                 </div>
             </div>
         </div>

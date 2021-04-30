@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -45,6 +44,12 @@ class User extends Authenticatable
 
 	public function tickets()
 	{
-		return $this->hasMany(Ticket::class);
+	    //dd($this->hasMany(ticket::class));
+		return $this->hasMany(ticket::class);
 	}
+
+	public function hasTickets()
+    {
+        dd($this->hasMany(Ticket::class));
+    }
 }

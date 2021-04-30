@@ -18,13 +18,17 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', function () {
 //    //return view('home');
 //});
-Route::get('/', '\App\Http\Controllers\HomeController');
+Route::get('/', '\App\Http\Controllers\DashController');
 
 Auth::routes();
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home', '\App\Http\Controllers\HomeController');
+//Route::get('/home', [App\Http\Controllers\DashController::class, 'index'])->name('home');
+Route::get('/home', '\App\Http\Controllers\DashController')->name('userdash');
+Route::post('/home', [\App\Http\Controllers\DashController::class, 'store']);
 
 //Route::get('/adminer', '\App\Http\Controllers\AdminerController@index');
 Route::get('/adminer', '\App\Http\Controllers\AdminerController@index');
+
+//Route::get('/new-ticket', [,'index']);
+//Route::post('/new-ticket', [,'store']);
 
