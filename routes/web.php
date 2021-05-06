@@ -29,6 +29,9 @@ Route::post('/home', [\App\Http\Controllers\DashController::class, 'store']);
 //Route::get('/adminer', '\App\Http\Controllers\AdminerController@index');
 Route::get('/adminer', '\App\Http\Controllers\AdminerController@index');
 
-//Route::get('/new-ticket', [,'index']);
-//Route::post('/new-ticket', [,'store']);
+Route::get('/new-ticket', [\App\Http\Controllers\NewTicketController::class,'index'])->name('newTicket');
+Route::post('/new-ticket', [\App\Http\Controllers\NewTicketController::class,'store']);
+
+Route::get('/TicketDetail', [\App\Http\Controllers\NewTicketController::class,'index'])->name('TicketDetail');
+Route::post('/TicketDetail', [\App\Http\Controllers\NewTicketController::class,'store']);
 

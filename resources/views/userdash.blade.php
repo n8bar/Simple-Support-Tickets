@@ -3,7 +3,11 @@
 @section('dashboard')
     @auth
         <h5>Welcome, {{ Auth::user()->name }}!</h5>
-        <hr style="border-width:10px; border-radius: 5px;" />
+        @if( !Auth::user()->isTechnician && !Auth::user()->isAdmin)
+            <button onclick="window.location='{{route('newTicket')}}'" >Open a new ticket</button>
+        @endif
+
+        <hr />
 
         @if( Auth::user()->isAdmin )  {{-- Admin Dashboard --}}
 
@@ -34,13 +38,21 @@
                     <th>Title</th>
                     <th>Details</th>
                     <th>Status</th>
+                    <th></th>
                 </thead>
                 @foreach(App\Models\ticket::all() as $t)
                     @if( $t->assignedTech() == Auth::user() ) {{-- $t->assignedTech()->id == Auth::user()->id ) --}}
-                        <tr>
+                        <tr class="ticket-row" onclick="ticket{{$t->id}}.submit()" >
                             <td>{{ $t->title }}</td>
                             <td>{{ $t->details  }}</td>
                             <td>{{ $t->status()->statusName }}</td>
+                            <td>
+                                <form name="ticket{{$t->id}}" action="{{route('TicketDetail')}}" method="post" >
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$t->id}}" />
+                                    <input type="submit" value="Open" />
+                                </form>
+                            </td>
                         </tr>
                     @endif
                 @endforeach
@@ -75,25 +87,39 @@
 
         @elseif( !Auth::user()->isTechnician)  {{-- User Dashboard --}}
 
-            @if(count($myTickets)>0)
+            @if($myTicketCount>0)
                 <h3>My tickets</h3>
                 <table class="table" style="border-radius: 20px; overflow: hidden">
                     <thead class="thead-light">
                         <th>Title</th>
                         <th>Details</th>
                         <th>Status</th>
+                        <th></th>
                     </thead>
                     @foreach( $myTickets as $t )
                         <tr>
                             <td>{{ $t->title }}</td>
                             <td>{{ $t->details  }}</td>
                             <td>{{ $t->status()->statusName }}</td>
-
+                            <td>
+                                @if($t->status()->id!=5)
+                                    <form action="{{route('userdash')}}" method="post">
+                                        @csrf
+                                        <input name="activity" type="hidden" value="cancel ticket" />
+                                        <input name="canTicketId" type="hidden" value="{{$t->id}}" />
+                                        @if($t->status()->id==1)
+                                            @php ($btnText="Delete")
+                                        @else
+                                            @php ($btnText="Close")
+                                        @endif
+                                        <input type="submit" onclick="return confirm('Really {{strtolower($btnText)}} \'{{$t->title}}\' ?')" value="{{$btnText}}" />
+                                    </form>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </table>
             @endif
-            <button>Open a new ticket" </button>
 
         @endif
 

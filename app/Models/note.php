@@ -10,15 +10,16 @@ class note extends Model
     use HasFactory;
 	protected $table = 'notes';
 	public $timestamps = true;
-	
+
 	protected $casts = [
-		
+
 	];
-	
+
 	protected $fillable = [
 		'note',
+        'ticket_id'
 	];
-	
+
 	public function ticket()
 	{
 		return $this->belongsTo(Ticket::class);

@@ -19,7 +19,8 @@ class ticket extends Model
 		'title',
 		'details',
 		'satisfaction',
-        'user_id'
+        'user_id',
+        'category_id'
 	];
 
 	public function notes()

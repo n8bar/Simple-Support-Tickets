@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
-class NewTicketController extends Controller
+class TicketDetailController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,17 +28,22 @@ class NewTicketController extends Controller
      *
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         //return view('home');
         //return view('userdash');
-        return $this->__invoke();
+        //return $this->__invoke();
+
+        dd($request);
+
+        return view('TicketDetail')
+            ->with('request', $request)
+        ;
     }
 
 	public function __invoke()
 	{
-        return view('newTicket')
-            ->with('categories', category::all())
+        return view('TicketDetail')
             //->with('assTickets', ticket::where('user_id', Auth::id())->get())
         ;
 	}
@@ -56,7 +61,7 @@ class NewTicketController extends Controller
 	public function store(Request $request) {
 
         $r=$request->request;
-        //dd($request);
+        dd($r);
         //$request->validate([
         $this->validate($request, [
             'ticketCategory'=>'required',

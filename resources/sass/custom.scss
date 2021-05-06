@@ -16,7 +16,9 @@ hr {
     border-radius: 5px;
 }
 
-.ticket-row {cursor: pointer;}
+.ticket-row {
+    //cursor: pointer;
+}
 .ticket-row:hover {
-    color:$ntpBright;
+    //color:$ntpBright;
 }

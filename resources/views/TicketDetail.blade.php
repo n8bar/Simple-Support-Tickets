@@ -1,12 +1,12 @@
 @extends('layouts.app')
-
+@inject('Category', 'App\Models\category')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <button onclick="location='{{ url('/') }}';" ><strong><</strong></button> {{ __('New Ticket') }}
+                    <button onclick="location='{{ url('/') }}';" ><strong><</strong></button> {{ __('Ticket') }}
 				</div>
 
                 <div class="card-body">
@@ -23,7 +23,7 @@
                                 @if(old('ticketCategory')<=0 || !old('ticketCategory'))
                                     <option value="" id="removeCategoryOption" >-</option>
                                 @endif
-                                @foreach($categories as $category)
+                                @foreach($Category::all() as $category)
                                     <option value="{{$category->id}}" @if($category->id==old('ticketCategory')) selected @endif>{{$category->name}}</option>
                                 @endforeach
                             </select>
