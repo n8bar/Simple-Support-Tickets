@@ -1,0 +1,22 @@
+$ntpBlue: #143663;
+$ntpBright: #01aaef;
+
+.invalid-feedback {
+    display:inline-block;
+    color:red;
+}
+
+button {
+    border-radius: revert;
+}
+
+hr {
+    border:none;
+    border-top: 10px #ddd solid;
+    border-radius: 5px;
+}
+
+.ticket-row {cursor: pointer;}
+.ticket-row:hover {
+    color:$ntpBright;
+}
