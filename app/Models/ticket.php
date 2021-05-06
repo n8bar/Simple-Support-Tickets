@@ -57,7 +57,11 @@ class ticket extends Model
 
 	public function category()
 	{
-		return $this->belongsTo(Category::class);
+        //return $this->belongsTo(category::class);
+        //return $this->belongsTo('App\Models\category');
+        //dd($this->belongsTo('App\Models\category'));
+
+        return category::where('id', $this->category_id)->first();
 	}
 
     public function user()

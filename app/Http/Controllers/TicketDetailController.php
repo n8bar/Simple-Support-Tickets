@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\assignment_change;
+use App\Models\note;
+use App\Models\status_change;
 use App\Models\User;
 use App\Models\ticket;
 use App\Models\category;
@@ -30,14 +33,12 @@ class TicketDetailController extends Controller
      */
     public function index(Request $request)
     {
-        //return view('home');
-        //return view('userdash');
-        //return $this->__invoke();
+        //dd($request);
 
-        dd($request);
-
+        $ticket=ticket::where('id',$request['id'])->first();
+        //dd($ticket->category_id);
         return view('TicketDetail')
-            ->with('request', $request)
+            ->with('ticket', $ticket )
         ;
     }
 
@@ -60,22 +61,50 @@ class TicketDetailController extends Controller
 /**/
 	public function store(Request $request) {
 
-        $r=$request->request;
-        dd($r);
-        //$request->validate([
-        $this->validate($request, [
-            'ticketCategory'=>'required',
-            'ticketTitle'=>'required',
-            'ticketDetails'=>'required',
-        ]);
 
-        ticket::create([
-            'user_id' => Auth::id(),
-            'category_id' => $request['ticketCategory'],
-            'title' => $request['ticketTitle'],
-            'details' => $request['ticketDetails'],
-        ]);
+        switch ($request->activity) {
+            case 'modify ticket':
+                //$request->validate([
+                $this->validate($request, [
+                    'ticketId'=>'required',
+                    'ticketCategory'=>'required',
+                    'ticketTitle'=>'required',
+                    'ticketDetails'=>'required',
+                ]);
 
-        return redirect()->route('userdash');
+                $ticket=ticket::where('id',$request['ticketId'])->first();
+                $ticket->category_id = $request['ticketCategory'];
+                $ticket->title= $request['ticketTitle'];
+                $ticket->details= $request['ticketDetails'];
+
+                $ticket->save();
+
+                return redirect()->route('userdash');
+
+            break;
+            case 'add note':
+                $this->validate($request, [
+                    'newNote'=>'required',
+                ]);
+
+                note::create([
+                    'user_id' => Auth::id(),
+                    'ticket_id' => $request['ticketId'],
+                    'note' => $request['newNote'],
+                ]);
+
+                return redirect()->route('TicketDetail')
+                    ->with('this_ticket_id', $request['ticketId'])
+                ;
+            break;
+            default:
+                //dd($request->request);
+            break;
+        }
+
+
+
+
+
     }
 }

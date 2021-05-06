@@ -9,26 +9,26 @@ class category extends Model
 {
     use HasFactory;
 	protected $table = 'categories';
-	
+
 	protected $casts = [
-		
+
 	];
-	
+
 	protected $fillable = [
-		'name',
+		'categoryName',
 		'description'
 	];
-	
+
 	public function tickets()
 	{
-		return $this->hasMany(Ticket::class);
+		return $this->hasMany(ticket::class);
 	}
-	
+
 	public function changedBy()
 	{
 		return $this->belongsTo(User::class, 'changed_by_tech_id');
 	}
-	
+
 	public function newTech()
 	{
 		return $this->belongsTo(User::class, 'new_tech_id');

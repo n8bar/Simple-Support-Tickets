@@ -6,7 +6,7 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <button onclick="location='{{ url('/') }}';" ><strong><</strong></button> {{ __('Ticket') }}
+                    <button onclick="location='{{ url('/') }}';" ><strong><</strong></button> {{ __('Ticket') }}# {{ $ticket->id }}
 				</div>
 
                 <div class="card-body">
@@ -15,16 +15,30 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <form action="{{route('newTicket')}}" method="post" class="w-100">
+                    <form action="{{route('TicketDetail')}}" method="post" class="w-100">
                         @csrf
+                        <input type="hidden" name="activity" value="modify ticket" />
+                        <input type="hidden" name="ticketId" value="{{$ticket->id}}" />
                         <label class="w-100">
                             Ticket Category: <br/>
-                            <select name="ticketCategory" class="w-100" onchange=" if($('#removeCategoryOption')) $('#removeCategoryOption').remove();  " >
+                            <select name="ticketCategory" class="w-100"
+                                onchange="
+                                    if($('#removeCategoryOption')) $('#removeCategoryOption').remove();
+                                    $('#modifyTicket').css('display','inline-block');
+                                "
+                            >
                                 @if(old('ticketCategory')<=0 || !old('ticketCategory'))
                                     <option value="" id="removeCategoryOption" >-</option>
                                 @endif
                                 @foreach($Category::all() as $category)
-                                    <option value="{{$category->id}}" @if($category->id==old('ticketCategory')) selected @endif>{{$category->name}}</option>
+                                    <option value="{{$category->id}}"
+                                            @if($category->id==old('ticketCategory'))
+                                                selected
+                                            @elseif( $ticket->category_id == $category->id )
+                                                selected
+                                            @endif>
+                                            {{$category->categoryName}}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('ticketCategory')
@@ -32,11 +46,14 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </label>
+                        </label><br />
+                        <input type="submit" id="modifyTicket" class="w-auto" style="display: none;" value="Submit" />
                         <br /><br />
                         <label class="w-100">
                             Ticket Title: <br/>
-                            <input class="w-100" type="text" name="ticketTitle" value="{{ old('ticketTitle') }}" />
+                            <input class="w-100" type="text" id="ticketTitle" readonly
+                                   value="{{ old('ticketTitle') ? old('ticketTitle') :  $ticket->title }}"
+                            />
                             @error('ticketTitle')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -46,7 +63,8 @@
                         <br /><br />
                         <label class="w-100">
                             Describe the issue you are experiencing:<br />
-                            <textarea class="w-100" name="ticketDetails" style="min-height: 200px;" placeholder="Include as much relevant information as you can." >{{ old('ticketDetails') }}</textarea>
+                            <textarea class="w-100" name="ticketDetails" style="min-height: 200px;" readonly
+                                >{{old('ticketDetails') ? old('ticketDetails') : $ticket->details}}</textarea>
                             @error('ticketDetails')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -54,9 +72,19 @@
                             @enderror
                         </label>
                         <br /><br />
-                        <input type="submit" class="w-auto" value="Submit" />
                     </form>
                 </div>
+            </div>
+            <br /><br />
+            <div class="card">
+                <div class="card-header">
+                    Notes
+                </div>
+                <form action="{{route('TicketDetail')}}" method="post" class="w-100">
+                    @csrf
+                    <input type="hidden" name="activity" value="add note" />
+                    <input type="hidden" name="ticketId" value="{{$ticket->id}}" />
+                </form>
             </div>
         </div>
     </div>

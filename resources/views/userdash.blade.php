@@ -36,6 +36,7 @@
             <table class="table table-dark" style="border-radius:20px; overflow: hidden;">
                 <thead class="thead-light">
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Details</th>
                     <th>Status</th>
                     <th></th>
@@ -44,10 +45,11 @@
                     @if( $t->assignedTech() == Auth::user() ) {{-- $t->assignedTech()->id == Auth::user()->id ) --}}
                         <tr class="ticket-row" onclick="ticket{{$t->id}}.submit()" >
                             <td>{{ $t->title }}</td>
+                            <td>{{ $t->category()->categoryName  }}</td>
                             <td>{{ $t->details  }}</td>
                             <td>{{ $t->status()->statusName }}</td>
                             <td>
-                                <form name="ticket{{$t->id}}" action="{{route('TicketDetail')}}" method="post" >
+                                <form name="ticket{{$t->id}}" action="{{route('TicketDetail')}}" method="get" >
                                     @csrf
                                     <input type="hidden" name="id" value="{{$t->id}}" />
                                     <input type="submit" value="Open" />
@@ -62,6 +64,7 @@
             <table class="table table-dark" style="border-radius:20px; overflow: hidden;">
                 <thead class="thead-light">
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Details</th>
                     <th>Status</th>
                     <th></th>
@@ -70,6 +73,7 @@
                     @if($t->assignedTech()==null)
                         <tr>
                             <td>{{ $t->title }}</td>
+                            <td>{{ $t->category()->categoryName  }}</td>
                             <td>{{ $t->details  }}</td>
                             <td>{{ $t->status()->statusName }}</td>
                             <td>
@@ -92,6 +96,7 @@
                 <table class="table" style="border-radius: 20px; overflow: hidden">
                     <thead class="thead-light">
                         <th>Title</th>
+                        <th>Category</th>
                         <th>Details</th>
                         <th>Status</th>
                         <th></th>
@@ -99,6 +104,7 @@
                     @foreach( $myTickets as $t )
                         <tr>
                             <td>{{ $t->title }}</td>
+                            <td>{{ $t->category()->categoryName  }}</td>
                             <td>{{ $t->details  }}</td>
                             <td>{{ $t->status()->statusName }}</td>
                             <td>
