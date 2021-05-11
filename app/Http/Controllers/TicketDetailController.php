@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\assignment_change;
-use App\Models\note;
-use App\Models\status_change;
+use App\Models\AssignmentChange;
+use App\Models\Note;
+use App\Models\StatusChange;
 use App\Models\User;
-use App\Models\ticket;
-use App\Models\category;
+use App\Models\Ticket;
+use App\Models\Category;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +35,7 @@ class TicketDetailController extends Controller
     {
         //dd($request);
 
-        $ticket=ticket::where('id',$request['id'])->first();
+        $ticket=Ticket::where('id',$request['id'])->first();
         //dd($ticket->category_id);
         return view('TicketDetail')
             ->with('ticket', $ticket )
@@ -72,7 +72,7 @@ class TicketDetailController extends Controller
                     'ticketDetails'=>'required',
                 ]);
 
-                $ticket=ticket::where('id',$request['ticketId'])->first();
+                $ticket=Ticket::where('id',$request['ticketId'])->first();
                 $ticket->category_id = $request['ticketCategory'];
                 $ticket->title= $request['ticketTitle'];
                 $ticket->details= $request['ticketDetails'];
@@ -87,7 +87,7 @@ class TicketDetailController extends Controller
             case 'delete note':
                 //dd($request);
 
-                $note=note::find($request['noteId']);
+                $note=Note::find($request['noteId']);
                 $ticketId=$note->ticket_id;
                 $note->delete();
 

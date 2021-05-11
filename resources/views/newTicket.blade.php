@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@inject('Category', 'App\Models\Category')
 
 @section('content')
 <div class="container">
@@ -23,8 +24,8 @@
                                 @if(old('ticketCategory')<=0 || !old('ticketCategory'))
                                     <option value="" id="removeCategoryOption" >-</option>
                                 @endif
-                                @foreach($categories as $category)
-                                    <option value="{{$category->id}}" @if($category->id==old('ticketCategory')) selected @endif>{{$category->name}}</option>
+                                @foreach($Category::all() as $category)
+                                    <option value="{{$category->id}}" @if($category->id==old('ticketCategory')) selected @endif>{{$category->categoryName}}</option>
                                 @endforeach
                             </select>
                             @error('ticketCategory')

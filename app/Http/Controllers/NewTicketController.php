@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\ticket;
-use App\Models\category;
+use App\Models\Ticket;
+use App\Models\Category;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +38,8 @@ class NewTicketController extends Controller
 	public function __invoke()
 	{
         return view('newTicket')
-            ->with('categories', category::all())
-            //->with('assTickets', ticket::where('user_id', Auth::id())->get())
+            //->with('categories', Category::all())
+            ////->with('assTickets', ticket::where('user_id', Auth::id())->get())
         ;
 	}
 

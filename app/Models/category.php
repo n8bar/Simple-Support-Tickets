@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class category extends Model
+class Category extends Model
 {
     use HasFactory;
 	protected $table = 'categories';
@@ -21,7 +21,7 @@ class category extends Model
 
 	public function tickets()
 	{
-		return $this->hasMany(ticket::class);
+		return $this->hasMany(Ticket::class);
 	}
 
 	public function changedBy()

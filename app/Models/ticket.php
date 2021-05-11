@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 
-class ticket extends Model
+class Ticket extends Model
 {
     use HasFactory;
 	protected $table = 'tickets';
@@ -30,7 +30,7 @@ class ticket extends Model
 
 	public function assignedTech()
 	{
-        $assCh = assignment_change::where('ticket_id', $this->id)->latest()->get()->first();
+        $assCh = AssignmentChange::where('ticket_id', $this->id)->latest()->get()->first();
 
         if ( $assCh == null) {
             return null;
@@ -46,7 +46,7 @@ class ticket extends Model
      */
 	public function status()
     {
-        $sc = status_change::where('ticket_id', $this->id)->latest()->get()->first();
+        $sc = StatusChange::where('ticket_id', $this->id)->latest()->get()->first();
 
         if ( $sc == null) {
             return Status::where('id', 1)->first();
@@ -61,7 +61,7 @@ class ticket extends Model
         //return $this->belongsTo('App\Models\category');
         //dd($this->belongsTo('App\Models\category'));
 
-        return category::where('id', $this->category_id)->first();
+        return Category::where('id', $this->category_id)->first();
 	}
 
     public function user()

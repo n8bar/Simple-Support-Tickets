@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\assignment_change;
-use App\Models\note;
-use App\Models\status_change;
+use App\Models\AssignmentChange;
+use App\Models\Note;
+use App\Models\StatusChange;
 use App\Models\User;
-use App\Models\ticket;
+use App\Models\Ticket;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +38,7 @@ class DashController extends Controller
 
 	public function __invoke()
 	{
-        $myTickets = ticket::where('user_id', Auth::id())->get();
+        $myTickets = Ticket::where('user_id', Auth::id())->get();
         $myTicketCount = ($myTickets) ? count($myTickets) : 0;
         return view('userdash')
             ->with('myTickets', $myTickets)
@@ -51,13 +51,13 @@ class DashController extends Controller
         switch ($request->activity) {
             case 'assign to me':
                 {//Todo: wrap this in a conditional for tickets with new status only.
-                    status_change::create([
+                    StatusChange::create([
                         'ticket_id' => $request->assTicketId,
                         'changed_by_tech_id' => Auth::id(),
                         'status_id' => 2,
                     ]);
                 }
-                assignment_change::create([
+                AssignmentChange::create([
                     'ticket_id'=>$request->assTicketId,
                     'changed_by_tech_id'=>Auth::id(),
                     'new_tech_id'=>Auth::id(),
@@ -70,11 +70,12 @@ class DashController extends Controller
                 if($ticket->status()->id==1) {
                     $ticket->delete();
                 } else {
-                    note::create([
+                    Note::create([
                         'ticket_id'=>$request->canTicketId,
-                        'note'=>'Cancelled by user'
+                        'note'=>'Cancelled by user',
+                        'user_id'=> Auth::id() //$ticket->assignedTech()->id
                     ]);
-                    status_change::create([
+                    StatusChange::create([
                         'ticket_id' => $request->canTicketId,
                         'changed_by_tech_id' => $ticket->assignedTech()->id,
                         'status_id' => 5,

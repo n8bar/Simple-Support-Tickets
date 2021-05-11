@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@inject('Category', 'App\Models\category')
+@inject('Category', 'App\Models\Category')
 @inject('Status', 'App\Models\Status')
-@inject('Note', 'App\Models\note')
+@inject('Note', 'App\Models\Note')
 @inject('User', 'App\Models\User')
-@inject('Ticket', 'App\Models\ticket')
+@inject('Ticket', 'App\Models\Ticket')
 @section('content')
     <div class="container">
     <div class="row justify-content-center">
