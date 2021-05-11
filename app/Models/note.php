@@ -17,7 +17,8 @@ class note extends Model
 
 	protected $fillable = [
 		'note',
-        'ticket_id'
+        'ticket_id',
+        'user_id'
 	];
 
 	public function ticket()
