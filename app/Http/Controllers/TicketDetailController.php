@@ -72,28 +72,46 @@ class TicketDetailController extends Controller
                     'ticketDetails'=>'required',
                 ]);
 
-                $ticket=Ticket::where('id',$request['ticketId'])->first();
+                $ticket=Ticket::find($request['ticketId']);
                 $ticket->category_id = $request['ticketCategory'];
                 $ticket->title= $request['ticketTitle'];
                 $ticket->details= $request['ticketDetails'];
 
                 $ticket->save();
 
-                return redirect()->route('userdash');
-
+                return redirect()->route('TicketDetail',['id'=>$request['ticketId']]);
             break;
             case 'update status':
-            break;
-            case 'delete note':
                 //dd($request);
 
+                StatusChange::create([
+                    'ticket_id'=>$request['ticketId'],
+                    'changed_by_tech_id'=>Auth::id(),
+                    'status_id'=>$request['ticketStatus'],
+                ]);
+
+                return redirect()->route('TicketDetail',['id'=>$request['ticketId']]);
+            break;
+            case 'delete note':
                 $note=Note::find($request['noteId']);
                 $ticketId=$note->ticket_id;
                 $note->delete();
 
-                return redirect()->route('TicketDetail',['id'=>$ticketId])
-                    //->with('ticket', ticket::find($request['ticketId']))
-                    ;
+                return redirect()->route('TicketDetail',['id'=>$ticketId]);
+            break;
+            case 'modify note':
+                $this->validate($request, [
+                    'noteNote'=>'required',
+                ]);
+
+                //dd($request->request);
+                $note=Note::find($request['noteId']);
+                $ticketId=$note->ticket_id;
+
+                $note->note=$request['noteNote'];
+                $note->save();
+
+                return redirect()->route('TicketDetail',['id'=>$ticketId]);
             break;
             case 'add note':
 

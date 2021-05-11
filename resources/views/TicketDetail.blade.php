@@ -5,6 +5,13 @@
 @inject('User', 'App\Models\User')
 @inject('Ticket', 'App\Models\Ticket')
 @section('content')
+    <?php
+    use Symfony\Component\Console\Input\Input;
+
+    if (!$ticket) {
+        $ticket==$Ticket::find($_REQUEST['id']);
+        }
+    ?>
     <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -51,7 +58,6 @@
                                 </span>
                             @enderror
                         </label>
-                        <br /><br />
                         <label class="w-100">
                             Ticket Title: <br/>
                             <input class="w-100" type="text" id="ticketTitle" readonly
@@ -63,7 +69,6 @@
                                 </span>
                             @enderror
                         </label>
-                        <br /><br />
                         <label class="w-100">
                             Describe the issue you are experiencing:<br />
                             <textarea class="w-100" name="ticketDetails" style="min-height: 200px;" readonly
@@ -73,42 +78,41 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </label><br />
+                        </label>
                         <input type="submit" id="modifyTicket" class="w-auto" style="display: none;" value="Submit" />
-                        <br /><br />
                     </form>
+                    <hr />
                     <form action="{{route('TicketDetail')}}" method="post" class="w-100">
                         @csrf
                         <input type="hidden" name="activity" value="update status" />
                         <input type="hidden" name="ticketId" value="{{$ticket->id}}" />
                         <label class="w-100">
-                            Ticket Category: <br/>
+                            Status: <br/>
                             <select name="ticketStatus" class="w-100"
                                     onchange="
-                                    if($('#removeCategoryOption')) $('#removeCategoryOption').remove();
-                                    $('#updateStatus').css('display','inline-block');
-                                "
-                            >
-                                @if(old('ticketCategory')<=0 || !old('ticketCategory'))
-                                    <option value="" id="removeCategoryOption" >-</option>
+                                        if($('#removeCategoryOption')) $('#removeCategoryOption').remove();
+                                        $('#updateStatus').css('display','inline-block');
+                                    ">
+                                @if(old('ticketStatus')<=0 || !old('ticketStatus'))
+                                    <option value="" id="removeStatusOption" >-</option>
                                 @endif
-                                @foreach($Category::all() as $category)
-                                    <option value="{{$category->id}}"
-                                            @if($category->id==old('ticketCategory'))
+                                @foreach($Status::all() as $status)
+                                    <option value="{{$status->id}}"
+                                            @if($status->id==old('ticketStatus'))
                                             selected
-                                            @elseif( $ticket->category_id == $category->id )
+                                            @elseif( $ticket->status()->id == $status->id )
                                             selected
                                         @endif>
-                                        {{$category->categoryName}}
+                                        {{$status->statusName}}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('ticketCategory')
-                            <span class="invalid-feedback" role="alert">
+                            @error('ticketStatus')
+                                <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </label>><br />
+                        </label><br />
                         <input type="submit" id="updateStatus" class="w-auto" style="display: none;" value="Submit" />
                         <br /><br />
                     </form>
@@ -127,13 +131,10 @@
                         <label class="w-100">
                             New note:<br/>
                             <textarea name="newNote" class="w-100"></textarea>
-                        </label><br />
+                        </label>
                         @error('newNote')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span><br />
+                            <strong class="invalid-feedback" role="alert">{{ $message }}</strong><br /><br />
                         @enderror
-                        <br />
                         <input type="submit" value="Submit" />
                     </form>
                     <hr />
@@ -142,16 +143,33 @@
                         <th>📆</th>
                         <th>Tech</th>
                         <th>Note</th>
-                        <th style="width:96px;"></th>
+                        <th style="width:192px;" colspan="2"></th>
                         </thead>
                         @foreach($Note::where('ticket_id',$ticket->id)->latest()->get() as $note)
                             <tr>
                                 <td>{{$note->created_at->format('Y-m-d')}}<br/>{{$note->created_at->format('H:i:s')}}</td>
                                 <td>{{$User::find($note->user_id)->name}}</td>
-                                <td>{{$note->note}}</td>
-                                <td>
+                                <td id="noteCell{{$note->id}}" class="noteCell" >
+                                    <form class="noteForm" action="{{route('TicketDetail')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="activity" value="modify note" />
+                                        <input type="hidden" name="noteId" value="{{$note->id}}" />
+                                        <textarea name="noteNote" id="noteContent{{$note->id}}" class="noteCellText" readonly >{{$note->note}}</textarea>
+                                        <input id="submitNoteModify{{$note->id}}" type="hidden" value="Save" />
+                                    </form>
+                                </td>
+                                <td id="editCell{{$note->id}}" style="width:56pt">
+                                    <button id="editNote{{$note->id}}" onclick="
+                                        $('#noteContent{{$note->id}}').removeAttr('readonly');
+                                        $('#noteCell{{$note->id}}').attr('colspan','2');
+                                        $('#submitNoteModify{{$note->id}}').prop('type','submit');
+                                        $('#noteContent{{$note->id}}').focus();
+                                        $('#editCell{{$note->id}}').remove();
+                                    ">Edit</button>
+                                </td>
+                                <td style="width:72pt">
                                     @if($note->user_id == Auth::id() )
-                                        <form name="note{{$note->id}}" action="{{route('TicketDetail')}}" method="post">
+                                        <form action="{{route('TicketDetail')}}" method="post">
                                             @csrf
                                             <input type="hidden" name="activity" value="delete note" />
                                             <input type="hidden" name="noteId" value="{{$note->id}}" />

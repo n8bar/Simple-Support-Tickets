@@ -22,3 +22,22 @@ hr {
 .ticket-row:hover {
     //color:$ntpBright;
 }
+
+.noteCell {
+    position:relative;
+}
+.noteForm {
+    position:relative;
+}
+.noteCellText {
+    position:relative;
+    width:100%;
+    height: 100%;
+    resize: none;
+}
+.noteCellText:read-only {
+    background: transparent;
+    color:inherit;
+    border:none;
+    resize: vertical;
+}
