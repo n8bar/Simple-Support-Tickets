@@ -34,7 +34,7 @@
                             Ticket Category: <br/>
                             <select name="ticketCategory" class="w-100"
                                 onchange="
-                                    if($('#removeCategoryOption')) $('#removeCategoryOption').remove();
+                                    $('#removeCategoryOption').remove()
                                     $('#modifyTicket').css('display','inline-block');
                                 "
                             >
@@ -90,7 +90,7 @@
                             Status: <br/>
                             <select name="ticketStatus" class="w-100"
                                     onchange="
-                                        if($('#removeCategoryOption')) $('#removeCategoryOption').remove();
+                                        $('#removeStatusOption').remove();
                                         $('#updateStatus').css('display','inline-block');
                                     ">
                                 @if(old('ticketStatus')<=0 || !old('ticketStatus'))
