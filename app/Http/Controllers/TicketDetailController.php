@@ -82,7 +82,21 @@ class TicketDetailController extends Controller
                 return redirect()->route('userdash');
 
             break;
+            case 'update status':
+            break;
+            case 'delete note':
+                //dd($request);
+
+                $note=note::find($request['noteId']);
+                $ticketId=$note->ticket_id;
+                $note->delete();
+
+                return redirect()->route('TicketDetail',['id'=>$ticketId])
+                    //->with('ticket', ticket::find($request['ticketId']))
+                    ;
+            break;
             case 'add note':
+
                 $this->validate($request, [
                     'newNote'=>'required',
                 ]);
@@ -93,9 +107,9 @@ class TicketDetailController extends Controller
                     'note' => $request['newNote'],
                 ]);
 
-                return redirect()->route('TicketDetail')
-                    ->with('this_ticket_id', $request['ticketId'])
-                ;
+                return redirect()->route('TicketDetail',['id'=>$request['ticketId']])
+                    //->with('ticket', ticket::find($request['ticketId']))
+                    ;
             break;
             default:
                 //dd($request->request);
