@@ -38,17 +38,60 @@ class DashController extends Controller
 
 	public function __invoke()
 	{
-        $myTickets = Ticket::where('user_id', Auth::id())->get();
-        $myTicketCount = ($myTickets) ? count($myTickets) : 0;
+        //$myTickets = Ticket::where('user_id', Auth::id())->get();
+        //$myTicketCount = ($myTickets) ? count($myTickets) : 0;
         return view('userdash')
-            ->with('myTickets', $myTickets)
-            ->with('myTicketCount', $myTicketCount)
-            ->with('assignMeTicket', 0)
+        //    ->with('myTickets', $myTickets)
+        //    ->with('myTicketCount', $myTicketCount)
+        //    ->with('assignMeTicket', 0)
         ;
 	}
 
 	public function store(Request $request) {
         switch ($request->activity) {
+            // Admin Activities ------------------------------------------------------------------------------//
+            case 'toggle admin':
+                if(User::find(Auth::id())->isAdmin) { //verify admin
+                    $user = User::find($request->userId);
+                    $user->isAdmin = !$user->isAdmin;
+                    $user->save();
+                }
+                return view('userdash')
+                    ->with('userQuery',$request->userQuery)
+                ;
+            break;
+            case 'toggle tech':
+                if(User::find(Auth::id())->isAdmin) { //verify admin
+                    $user = User::find($request->userId);
+                    $user->isTechnician = !$user->isTechnician;
+                    $user->save();
+                }
+                return view('userdash')
+                    ->with('userQuery',$request->userQuery)
+                ;
+            break;
+            case 'user search':
+                $userResults=User::where('isAdmin',false)->where('isTechnician',false)
+                    ->where(function($q) use ($request) {
+                        $q->where('email','LIKE',"%$request->userQuery%")
+                        ->orwhere('name','LIKE',"%$request->userQuery%");
+                    })
+                    ->get()
+                ;
+                return view('userdash')
+                    ->with('userQuery',$request->userQuery)
+                    ->with('userResults',$userResults)
+                ;
+            case 'delete user':
+                if(User::find(Auth::id())->isAdmin) { //verify admin
+                    User::destroy($request->userId);
+                    return view('userdash')
+                        ->with('userQuery',$request->userQuery)
+                    ;
+                }
+            break;
+
+            // Tech Activities -------------------------------------------------------------------------------//
             case 'assign to me':
                 {//Todo: wrap this in a conditional for tickets with new status only.
                     StatusChange::create([
@@ -63,6 +106,8 @@ class DashController extends Controller
                     'new_tech_id'=>Auth::id(),
                 ]);
             break;
+
+            // User Activities -------------------------------------------------------------------------------//
             case 'cancel ticket':
                 //dd($request->request);
                 $ticket = ticket::find($request->canTicketId);
@@ -84,7 +129,7 @@ class DashController extends Controller
                 }
             break;
             default:
-                //dd($request->request);
+                dd($request->request);
             break;
         }
 

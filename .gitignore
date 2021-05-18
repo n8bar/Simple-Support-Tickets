@@ -95,3 +95,4 @@ tests/Feature/_notes/desktop.ini
 tests/Feature/desktop.ini
 tests/Unit/_notes/desktop.ini
 tests/Unit/desktop.ini
+.idea/inspectionProfiles/Project_Default.xml

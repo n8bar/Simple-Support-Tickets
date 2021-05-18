@@ -35,3 +35,4 @@ Route::post('/new-ticket', [\App\Http\Controllers\NewTicketController::class,'st
 Route::get('/TicketDetail', [\App\Http\Controllers\TicketDetailController::class,'index'])->name('TicketDetail');
 Route::post('/TicketDetail', [\App\Http\Controllers\TicketDetailController::class,'store']);
 
+Route::get('/getTechnicians/{s}', '\App\Http\Controllers\TicketDetailController@getTechnicians');

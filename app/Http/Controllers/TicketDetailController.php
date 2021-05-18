@@ -59,6 +59,19 @@ class TicketDetailController extends Controller
         ]);
     }
 /**/
+    public function getTechnicians($s='') {
+        $s=str_replace('@','\\@',$s);
+        $Technicians = User::where('isTechnician',true)
+            ->where(function($q) use ($s) {
+                $q->where('email', 'LIKE', "%$s%")
+                    ->orwhere('name', 'LIKE', "%$s%");
+            })
+            ->limit(10)
+            ->get();
+        //dd(response()->json($Technicians));
+        return response()->json($Technicians);
+    }
+
 	public function store(Request $request) {
 
 
@@ -117,9 +130,10 @@ class TicketDetailController extends Controller
 
                 $this->validate($request, [
                     'newNote'=>'required',
+                    'ticketId'=>'required'
                 ]);
 
-                note::create([
+                Note::create([
                     'user_id' => Auth::id(),
                     'ticket_id' => $request['ticketId'],
                     'note' => $request['newNote'],
@@ -128,6 +142,28 @@ class TicketDetailController extends Controller
                 return redirect()->route('TicketDetail',['id'=>$request['ticketId']])
                     //->with('ticket', ticket::find($request['ticketId']))
                     ;
+            break;
+            case 'update tech':
+                $this->validate($request,[
+                    'assToTech'=>'required',
+                    'ticketId'=>'required'
+                ]);
+
+                AssignmentChange::create([
+                    'ticket_id' => $request['ticketId'],
+                    'changed_by_tech_id' => Auth::id(),
+                    'new_tech_id' => $request['assToTech'],
+                ]);
+
+                if(Ticket::find($request['ticketId'])->status()->id==1) {
+                    StatusChange::create([
+                        'ticket_id'=>$request['ticketId'],
+                        'changed_by_tech_id'=>Auth::id(),
+                        'status_id'=>2,
+                    ]);
+                }
+
+                return redirect()->route('TicketDetail',['id'=>$request['ticketId']]);
             break;
             default:
                 //dd($request->request);
