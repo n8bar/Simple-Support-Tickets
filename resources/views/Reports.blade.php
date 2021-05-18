@@ -14,7 +14,7 @@
                             Welcome to Playcryptos.com Support!
                         @endguest
                         @auth
-                            {{ __('Reports') }}
+                            <button onclick="location='{{ url('/') }}';" ><strong><</strong></button> {{ __('Reports') }}
                         @endauth
                     </div>
 
@@ -34,14 +34,28 @@
                                 <select name="reportId" >
                                     <option>- Please select a report -</option>
                                     <option value="DTR">Daily Ticket Resolution</option>
-                                    <option value="TART">Ticket Average Resolution Time</option>
+                                    <option value="TRS">Ticket Resolution Speed</option>
                                 </select>
                                 <input type="submit" value="Run" />
                             </form>
 
-                            @if($title ?? '' != '')
+                            @if($title ?? false)
                                 <hr />
                                 <h3>{{$title}}</h3>
+                                <table class="table table-dark" style="border-radius:20px; overflow: hidden;" >
+                                    <thead class="thead-light">
+                                        @foreach($columns['titles'] as $colTitle)
+                                            <th>{{$colTitle}}</th>
+                                        @endforeach
+                                    </thead>
+                                    @foreach($rows as $r)
+                                        <tr>
+                                            @foreach($columns['names'] as $colName)
+                                                <td>{{$r->$colName}}</td>
+                                            @endforeach
+                                        </tr>
+                                    @endforeach
+                                </table>
                             @endif
                         @endauth
                     </div>

@@ -19,6 +19,7 @@ class StatusChange extends Model
         'ticket_id',
         'changed_by_tech_id',
 		'status_id',
+        'created_at'
 	];
 
 	public function ticket()

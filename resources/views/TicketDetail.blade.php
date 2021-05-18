@@ -8,9 +8,9 @@
     <?php
     use Symfony\Component\Console\Input\Input;
 
-    if (!$ticket) {
-        $ticket==$Ticket::find($_REQUEST['id']);
-        }
+    if ($ticket ?? false) {
+        $ticket=$Ticket::find($_REQUEST['id']);
+    }
     ?>
     <div class="container">
     <div class="row justify-content-center">

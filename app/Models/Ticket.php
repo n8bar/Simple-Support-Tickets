@@ -20,7 +20,8 @@ class Ticket extends Model
 		'details',
 		'satisfaction',
         'user_id',
-        'category_id'
+        'category_id',
+        'created_at'
 	];
 
 	public function notes()
@@ -66,7 +67,19 @@ class Ticket extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return User::find($this->user_id);
+        //return $this->belongsTo(User::class);
     }
 
+    public function duration()
+    {
+        if ($this->status()->id != 5) {
+            return 0;
+        }
+        $sc = StatusChange::where('ticket_id', $this->id)->
+            where('status_id',5)->
+            latest()->get()->first();
+        $duration=$sc->created_at->diffInSeconds($this->created_at);
+        return gmdate('H:i:s', $duration);
+    }
 }
