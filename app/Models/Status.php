@@ -22,7 +22,7 @@ class Status extends Model
 	public function tickets()
 	{
 		//todo: Replace this with a list of tickets where this status is the latest in status_changes.
-		return $this->hasMany(status_change::class);
+		return $this->hasMany(StatusChange::class);
 	}
 
 }
