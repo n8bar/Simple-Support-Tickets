@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\StatusChange;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
 
@@ -15,19 +16,30 @@ class TicketTest extends TestCase
     protected $ticket6;
     protected $ticket14;
 
+    protected $User;
+    protected $user;
+
     public function setup(): void {
-        parent::setUp();
+        //parent::setUp();
 
-        $this->Ticket = app()->make('App\Models\Ticket');
 
-        $ticket1=$this->Ticket::find(1);
-        $ticket6=$this->Ticket::find(6);
-        $ticket14=$this->Ticket::find(14);
+
+        //$this->Ticket = app('Ticket');
+
+        //$this->user=User::find(1);
+        $this->ticket1=Ticket::find(1);
+
+        //$ticket1=$this->Ticket::find(1);
+        //$ticket6=$this->Ticket::find(6);
+        //$ticket14=$this->Ticket::find(14);
     }
 
+    public function test_ticket_testing_ticket_is_good() {
+        $this->assertNotTrue( false );
+    }
+/*
     public function test_ticket_assigned_tech_for_unassigned_tickets() {
         //This assumes that ticket#1 in the database is unassigned.
-
         $this->assertNull($this->ticket1->assignedTech());
     }
 /*
