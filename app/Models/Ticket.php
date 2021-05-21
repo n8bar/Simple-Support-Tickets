@@ -82,4 +82,8 @@ class Ticket extends Model
         $duration=$sc->created_at->diffInSeconds($this->created_at);
         return gmdate('H:i:s', $duration);
     }
+
+    public function test() {
+	    return true;
+    }
 }

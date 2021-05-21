@@ -160,7 +160,7 @@
                     @endif
                 @endforeach
             </table>
-            <hr style="border-width:10px; border-radius: 5px;" />
+            <hr />
             <h3>Unnassigned</h3>
             <table class="table table-dark" style="border-radius:20px; overflow: hidden;">
                 <thead class="thead-light">

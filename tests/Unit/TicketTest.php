@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+//namespace Tests\Unit;
 
 use App\Models\StatusChange;
 use App\Models\Ticket;
@@ -26,8 +26,19 @@ class TicketTest extends TestCase
 
         //$this->Ticket = app('Ticket');
 
-        //$this->user=User::find(1);
-        $this->ticket1=Ticket::find(1);
+        $this->user=User::find(1);
+        //$this->ticket1=Ticket::find(1);
+
+        //$ticket1=Ticket::create([
+        //    'title'=>'TestTicket1',
+        //    'details'=>'A ticket created by the unit test',
+        //    'user_id'=>3,
+        //    'category_id'=>5,
+        //    //'created_at'=>now()
+        //]);
+
+
+
 
         //$ticket1=$this->Ticket::find(1);
         //$ticket6=$this->Ticket::find(6);
@@ -35,6 +46,7 @@ class TicketTest extends TestCase
     }
 
     public function test_ticket_testing_ticket_is_good() {
+        $this->assertTrue(Ticket::test());
         $this->assertNotTrue( false );
     }
 /*

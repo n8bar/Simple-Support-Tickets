@@ -14,7 +14,7 @@ hr {
     border:none;
     border-top: 2px $ntpBright solid;
     border-radius: 4px;
-    box-shadow: $ntpBlue 0 2px 3px;
+    box-shadow: $ntpBlue 0 3px 2px;
 }
 
 input {
@@ -22,6 +22,10 @@ input {
     border-radius:5px;
     box-shadow: #444 0 4px 3px;
 }
+input[type=radio], input[type=checkbox] {
+    box-shadow: none;
+}
+
 select {
     border-width:1px;
     border-radius:5px;
