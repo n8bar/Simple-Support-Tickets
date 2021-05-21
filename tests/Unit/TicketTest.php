@@ -4,50 +4,100 @@
 
 use App\Models\StatusChange;
 use App\Models\Ticket;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\TestCase;
+//use PHPUnit\Framework\TestCase;
+use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class TicketTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
+
     protected $Ticket;
     protected $ticket1;
     protected $ticket6;
     protected $ticket14;
 
     protected $User;
-    protected $user;
+    public $user;
 
     public function setup(): void {
-        //parent::setUp();
-
+        parent::setUp();
 
 
         //$this->Ticket = app('Ticket');
 
-        $this->user=User::find(1);
-        //$this->ticket1=Ticket::find(1);
-
-        //$ticket1=Ticket::create([
-        //    'title'=>'TestTicket1',
-        //    'details'=>'A ticket created by the unit test',
-        //    'user_id'=>3,
-        //    'category_id'=>5,
-        //    //'created_at'=>now()
-        //]);
-
-
-
+        //$this->user=User::find(1);
 
         //$ticket1=$this->Ticket::find(1);
         //$ticket6=$this->Ticket::find(6);
         //$ticket14=$this->Ticket::find(14);
+
+        /*
+        User::create([
+            'name'=>'Test User',
+            'email'=>'n8@playcryptos.com',
+            'password'=>'$2y$10$kVjggdB7tZp4V9TrN9PWFObCu4tvhyqmcXmWCRWHeiQhTrrSMoN9q',
+            'isTechnician'=>true,
+            'isAdmin'=>false
+        ]);/**/
+        $this->user=User::find(1);
     }
 
-    public function test_ticket_testing_ticket_is_good() {
-        $this->assertTrue(Ticket::test());
-        $this->assertNotTrue( false );
+    public function test_categories_setup_good() {
+        $this->assertTrue($this->user->isTechnician==1);
+        Category::create(
+            [   'categoryName'=>'Login Issues',
+                'description'=>'Anything related to login'
+            ],
+        );
+        $this->assertEquals('Login Issues',Category::find(1)->categoryName);
+        Category::create(
+            [   'categoryName'=>'Cosmetic Issues',
+                'description'=>'Problems with Look & Feel'
+            ],
+        );
+        $this->assertEquals('Cosmetic Issues',Category::find(2)->categoryName);
+        Category::create(
+            [   'categoryName'=>'Bug Report',
+                'description'=>'This needs fixed.'
+            ],
+        );
+        $this->assertEquals('Bug Report',Category::find(3)->categoryName);
+        Category::create(
+            [   'categoryName'=>'Feature Request',
+                'description'=>'"I wish I could..." or "It\'d be cool if..."'
+            ],
+        );
+        $this->assertEquals('Feature Request',Category::find(4)->categoryName);
+        Category::create(
+            [   'categoryName'=>'Other',
+                'description'=>'None of the above'
+            ],
+        );
+        $this->assertEquals('Other',Category::find(5)->categoryName);
+
+    }
+
+    public function testing_user_is_good() {
+        $this->user=User::find(1);
+        $this->assertTrue($this->user->isTechnician==1);
+    }
+
+    public function testing_ticket_is_good() {
+        //Did user get trashed?
+        $this->assertTrue(User::find(1)->isTechnician==1);
+/*
+        $this->ticket1= Ticket::create([
+            'user_id' => 1,
+            'category_id' => 5,
+            'title' => "'UnitTest Ticket'",
+            'details' => "'A ticket created by a unit test'",
+        ]);
+        $this->assertTrue($this->ticket1->test());
+/**/
     }
 /*
     public function test_ticket_assigned_tech_for_unassigned_tickets() {

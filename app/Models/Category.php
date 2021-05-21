@@ -9,7 +9,6 @@ class Category extends Model
 {
     use HasFactory;
 	protected $table = 'categories';
-
 	protected $casts = [
 
 	];
@@ -24,13 +23,4 @@ class Category extends Model
 		return $this->hasMany(Ticket::class);
 	}
 
-	public function changedBy()
-	{
-		return $this->belongsTo(User::class, 'changed_by_tech_id');
-	}
-
-	public function newTech()
-	{
-		return $this->belongsTo(User::class, 'new_tech_id');
-	}
 }

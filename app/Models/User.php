@@ -52,4 +52,8 @@ class User extends Authenticatable
     {
         dd($this->hasMany(Ticket::class));
     }
+
+    public function test() {
+        return true;
+    }
 }

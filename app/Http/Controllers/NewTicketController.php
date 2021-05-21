@@ -64,7 +64,7 @@ class NewTicketController extends Controller
             'ticketDetails'=>'required',
         ]);
 
-        ticket::create([
+        Ticket::create([
             'user_id' => Auth::id(),
             'category_id' => $request['ticketCategory'],
             'title' => $request['ticketTitle'],

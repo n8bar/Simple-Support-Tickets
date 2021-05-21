@@ -129,7 +129,7 @@ class DashController extends Controller
                 }
             break;
             default:
-                dd($request->request);
+                //dd($request->request);
             break;
         }
 
