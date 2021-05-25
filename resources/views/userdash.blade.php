@@ -3,7 +3,7 @@
 @section('dashboard')
     @auth
         <h5>Welcome, {{ Auth::user()->name }}!
-        @if(Auth::user()->isAdmin)<button id="btnReports" onclick="window.location='{{url('/Reports')}}'">Reports</button></h5> @endif
+        @if(Auth::user()->isAdmin)<button id="btnReports" onclick="window.location='{{url('/Reports')}}'">Reports</button> @endif </h5>
         @if( !Auth::user()->isTechnician && !Auth::user()->isAdmin)
             <button onclick="window.location='{{route('newTicket')}}'" >Open a new ticket</button>
         @endif
