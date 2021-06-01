@@ -63,7 +63,7 @@
                 <input name="activity" type="hidden" value="user search" />
                 <label>
                     Search:
-                    <input name="query" type="search" value="{{$userQuery ?? ''}}" placeholder="name or email" onkeyup="if(event.keyCode===13) $('#sUserSubmit').click()" />
+                    <input name="userQuery" type="search" value="{{$userQuery ?? ''}}" placeholder="name or email" onkeyup="if(event.keyCode===13) $('#sUserSubmit').click()" />
                 </label>
                 <input id="sUserSubmit" type="submit" value="🔍" />
             </form>
@@ -134,7 +134,7 @@
         {{------------------------------------------------------------------------------------------------------}}
         @if( Auth::user()->isTechnician)  {{-- Technician Dashboard --}}
 
-            <h3>Assigned To Me:</h3>
+            <h3>Assigned to Me:</h3>
             <table class="table table-dark" style="border-radius:20px; overflow: hidden;">
                 <thead class="thead-light">
                     <th>Title</th>
