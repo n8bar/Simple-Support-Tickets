@@ -11,6 +11,11 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+*desktop.ini
+resources/views/_notes/dwsync.xml
+_notes/dwsync.xml
+routes/_notes/dwsync.xml
+*dwsync.xml
 .idea/deployment.xml
 .idea/modules.xml
 .idea/php.xml
